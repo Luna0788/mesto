@@ -1,0 +1,9 @@
+.button_type_add {
+  min-height: 50px;
+  min-width: 150px;
+  padding: 0;
+  border-width: 2px;
+  background-image: url('../../../images/plus.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}

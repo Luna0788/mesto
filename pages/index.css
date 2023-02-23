@@ -30,3 +30,6 @@
 @import url('../blocks/element/element.css');
 @import url('../blocks/element/__description/element__description.css');
 @import url('../blocks/element/__name/element__name.css');
+
+@import url('../blocks/footer/footer.css');
+@import url('../blocks/footer/__copyright/footer__copyright.css');

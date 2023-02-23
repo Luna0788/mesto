@@ -3,4 +3,9 @@
   color: #fff;
   cursor: pointer;
   border: 1px solid #FFFFFF;
+  transition: opacity 0.5s ease;
+}
+
+.button:hover{
+  opacity: 0.6;
 }

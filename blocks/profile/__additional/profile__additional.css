@@ -5,3 +5,11 @@
   line-height: 22px;
   margin: 0;
 }
+
+@media screen and (max-width: 320px) {
+  .profile__additional {
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+  }
+}

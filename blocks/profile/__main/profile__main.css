@@ -1,5 +1,6 @@
 .profile__main{
   display: flex;
+  align-content: space-around;
 }
 
 @media screen and (max-width: 320px) {

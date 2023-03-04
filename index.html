@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./pages/index.css">
   <title>Mesto</title>
+  <script src="./scripts/index.js" defer></script>
 </head>
 <body class="page">
   <header class="header">
@@ -19,13 +20,13 @@
         <img src="./images/avatar.jpg" alt="Аватар пользователя" class="profile__avatar">
         <div class="profile__info">
           <div class="profile__name-wrapper">
-            <p class="profile__name">Жак-Ив Кусто</p>
-            <button class="button button_type_edit"></button>
+            <h1 class="profile__name">Жак-Ив Кусто</h1>
+            <button class="button button_type_edit" aria-label="Редактировать"></button>
           </div>
           <p class="profile__additional">Исследователь океана</p>
         </div>
       </div>
-      <button class="button button_type_add"></button>
+      <button class="button button_type_add" aria-label="Добавить"></button>
     </section>
 
     <section class="elements">
@@ -66,6 +67,25 @@
   <footer class="footer">
     <p class="footer__copyright">&#169; 2020 Mesto Russia</p>
   </footer>
+
+  <section class="popup popup_type_profile-edit">
+
+      <form name="edit-form" class="popup__container">
+        <h2 class='popup__heading'>Редактировать профиль</h2>
+
+        <fieldset class="popup__input-container">
+          <input type="text" class="popup__input popup__input_type_name" name="name" placeholder="Имя">
+          <input type="text" class="popup__input popup__input_type_additional" name="additional" placeholder="О себе">
+        </fieldset>
+
+        <button class="button button_type_save">Сохранить</button>
+
+        <button type="button" aria-label="Закрыть" class="button popup__toggle">
+          <span class="popup__toggle-image"></span>
+        </button>
+      </form>
+
+  </div>
 
 </body>
 </html>

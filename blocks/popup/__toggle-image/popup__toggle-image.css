@@ -1,0 +1,14 @@
+.popup__toggle-image {
+  display: block;
+  width: 32px;
+  height: 32px;
+  background-image: url('../../../images/CloseIcon.png');
+  background-size: contain;
+}
+
+@media screen and (max-width: 320px) {
+  .popup__toggle-image {
+    width: 20px;
+    height: 20px;
+  }
+}

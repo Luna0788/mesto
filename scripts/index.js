@@ -38,5 +38,5 @@ function handleFormSubmit (evt) {
   closePopup(editProfilePopup);
 }
 
-const formElement = document.querySelector('.popup__container[name="edit-form"]');
+const formElement = document.forms['edit-form'];
 formElement.addEventListener('submit', handleFormSubmit);

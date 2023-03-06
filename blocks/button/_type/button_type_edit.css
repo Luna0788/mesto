@@ -4,6 +4,7 @@
   background-position: center;
   width: 24px;
   height: 24px;
+  flex-shrink: 0;
 }
 
 @media screen and (max-width: 320px) {

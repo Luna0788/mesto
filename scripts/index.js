@@ -1,3 +1,30 @@
+const initialCards = [
+  {
+    name: 'Архыз',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+  },
+  {
+    name: 'Челябинская область',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+  },
+  {
+    name: 'Иваново',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+  },
+  {
+    name: 'Камчатка',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+  },
+  {
+    name: 'Холмогорский район',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+  },
+  {
+    name: 'Байкал',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+  }
+];
+
 const editProfileButton = document.querySelector('.button_type_edit');
 const editProfilePopup = document.querySelector('.popup_type_profile-edit');
 const closeProfileButton = document.querySelector('.popup__toggle');
@@ -40,3 +67,19 @@ function handleFormSubmit (evt) {
 
 const formElement = document.forms['edit-form'];
 formElement.addEventListener('submit', handleFormSubmit);
+
+const cardList =  document.querySelector('.element-list');
+const cardTemplate = document.querySelector('#elementTemplate').content;
+
+function createCard(card) {
+  const newCard = cardTemplate.cloneNode(true);
+  const cardPhoto = newCard.querySelector('.element__photo');
+  const cardName = newCard.querySelector('.element__name');
+  cardName.textContent = card.name;
+  cardPhoto.setAttribute('src', card.link);
+  cardPhoto.setAttribute('alt', `Фотография ${card.name}`);
+
+  cardList.append(newCard);
+}
+
+initialCards.forEach(createCard);

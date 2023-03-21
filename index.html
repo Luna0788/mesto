@@ -30,7 +30,7 @@
 
     <section class="elements">
       <ul class="element-list">
-        <li class="element">
+        <!-- <li class="element">
           <img src="./images/Karachaevsk.jpg" alt="Карачаевск" class="element__photo">
           <div class="element__description">
             <p class="element__name">Карачаевск</p>
@@ -76,7 +76,7 @@
             <p class="element__name">Карачаево-Черкессия</p>
             <button class="button element__like-button" type="button"></button>
           </div>
-        </li>
+        </li> -->
       </ul>
     </section>
   </main>
@@ -98,6 +98,16 @@
       <button type="button" aria-label="Закрыть" class="button popup__toggle"></button>
     </div>
   </div>
+
+  <template id="elementTemplate">
+    <li class="element">
+      <img src="#" alt="." class="element__photo">
+      <div class="element__description">
+        <p class="element__name"></p>
+        <button class="button element__like-button" type="button"></button>
+      </div>
+    </li>
+  </template>
 
 </body>
 </html>

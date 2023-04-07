@@ -30,53 +30,6 @@
 
     <section class="elements">
       <ul class="element-list">
-        <!-- <li class="element">
-          <img src="./images/Karachaevsk.jpg" alt="Карачаевск" class="element__photo">
-          <div class="element__description">
-            <p class="element__name">Карачаевск</p>
-            <button class="button element__like-button" type="button"></button>
-          </div>
-        </li>
-
-        <li class="element">
-          <img src="./images/Elbrus.jpg" alt="Гора Эльбрус" class="element__photo">
-          <div class="element__description">
-            <p class="element__name">Гора Эльбрус</p>
-            <button class="button element__like-button" type="button"></button>
-          </div>
-        </li>
-
-        <li class="element">
-          <img src="./images/Dombay.jpg" alt="Домбай" class="element__photo">
-          <div class="element__description">
-            <p class="element__name">Домбай</p>
-            <button class="button element__like-button" type="button"></button>
-          </div>
-        </li>
-
-        <li class="element">
-          <img src="./images/Elbrus.jpg" alt="Гора Эльбрус" class="element__photo">
-          <div class="element__description">
-            <p class="element__name">Гора Эльбрус</p>
-            <button class="button element__like-button" type="button"></button>
-          </div>
-        </li>
-
-        <li class="element">
-          <img src="./images/Dombay.jpg" alt="Домбай" class="element__photo">
-          <div class="element__description">
-            <p class="element__name">Домбай</p>
-            <button class="button element__like-button" type="button"></button>
-          </div>
-        </li>
-
-        <li class="element">
-          <img src="./images/Karachaevsk.jpg" alt="Карачаевск" class="element__photo">
-          <div class="element__description">
-            <p class="element__name">Карачаево-Черкессия</p>
-            <button class="button element__like-button" type="button"></button>
-          </div>
-        </li> -->
       </ul>
     </section>
   </main>
@@ -94,6 +47,20 @@
           <input type="text" class="popup__input popup__input_type_additional" name="additional" placeholder="О себе">
         </fieldset>
         <button class="button button_type_save" type="submit">Сохранить</button>
+      </form>
+      <button type="button" aria-label="Закрыть" class="button popup__toggle"></button>
+    </div>
+  </div>
+
+  <div class="popup popup_type_new-place">
+    <div class="popup__container">
+      <h2 class='popup__heading'>Новое место</h2>
+      <form name="new-place-form" class="popup__edit-form">
+        <fieldset class="popup__input-container">
+          <input type="text" class="popup__input popup__input_type_place-name" name="place-name" placeholder="Название">
+          <input type="text" class="popup__input popup__input_type_picture-ref" name="picture-ref" placeholder="Ссылка на картинку">
+        </fieldset>
+        <button class="button button_type_save" type="submit">Создать</button>
       </form>
       <button type="button" aria-label="Закрыть" class="button popup__toggle"></button>
     </div>

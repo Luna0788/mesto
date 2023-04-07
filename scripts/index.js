@@ -27,7 +27,15 @@ const initialCards = [
 
 const editProfileButton = document.querySelector('.button_type_edit');
 const editProfilePopup = document.querySelector('.popup_type_profile-edit');
-const closeProfileButton = document.querySelector('.popup__toggle');
+
+const closePopupButtons = document.querySelectorAll('.popup__toggle');
+closePopupButtons.forEach((closeButton) => closeButton.addEventListener('click', function (evt) {
+  const thisPopup = evt.target.closest('.popup');
+  closePopup(thisPopup);
+}));
+
+const addNewPlaceButton = document.querySelector('.button_type_add');
+const addNewPlacePopup = document.querySelector('.popup_type_new-place');
 
 const userNameElement = document.querySelector('.profile__name');
 let userName = userNameElement.textContent;
@@ -52,8 +60,8 @@ editProfileButton.addEventListener('click', function() {
   openPopup(editProfilePopup);
 });
 
-closeProfileButton.addEventListener('click', function() {
-  closePopup(editProfilePopup);
+addNewPlaceButton.addEventListener('click', function() {
+  openPopup(addNewPlacePopup);
 });
 
 function handleFormSubmit (evt) {

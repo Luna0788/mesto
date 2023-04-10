@@ -64,7 +64,7 @@ addNewPlaceButton.addEventListener('click', function() {
   openPopup(addNewPlacePopup);
 });
 
-function handleFormSubmit (evt) {
+function handleEditFormSubmit (evt) {
   evt.preventDefault();
   let newUserName = userNameInput.value;
   let newUserAbout = userAboutInput.value;
@@ -73,8 +73,8 @@ function handleFormSubmit (evt) {
   closePopup(editProfilePopup);
 }
 
-const formElement = document.forms['edit-form'];
-formElement.addEventListener('submit', handleFormSubmit);
+const editForm = document.forms['edit-form'];
+editForm.addEventListener('submit', handleEditFormSubmit);
 
 const cardList =  document.querySelector('.element-list');
 const cardTemplate = document.querySelector('#elementTemplate').content;
@@ -86,8 +86,22 @@ function createCard(card) {
   cardName.textContent = card.name;
   cardPhoto.setAttribute('src', card.link);
   cardPhoto.setAttribute('alt', `Фотография ${card.name}`);
-
-  cardList.append(newCard);
+  return newCard;
 }
 
-initialCards.forEach(createCard);
+initialCards.forEach(card => {
+  cardList.append(createCard(card));
+});
+
+const newPlaceForm = document.forms['new-place-form'];
+newPlaceForm.addEventListener('submit', handleNewPlaceFormSubmit);
+
+function handleNewPlaceFormSubmit (evt) {
+  evt.preventDefault();
+  const newCard = {
+    name: newPlaceForm.querySelector('.popup__input_type_place-name').value,
+    link: newPlaceForm.querySelector('.popup__input_type_picture-ref').value
+  };
+  cardList.prepend(createCard(newCard));
+  closePopup(addNewPlacePopup);
+}

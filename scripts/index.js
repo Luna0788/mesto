@@ -83,10 +83,10 @@ function createCard(card) {
   const newCard = cardTemplate.cloneNode(true);
   const cardPhoto = newCard.querySelector('.element__photo');
   const cardName = newCard.querySelector('.element__name');
-  console.log(newCard.querySelector('.element__like-button'));
   newCard.querySelector('.element__like-button').addEventListener('click', function(evt) {
     evt.target.classList.toggle('element__like-button_active');
   });
+  newCard.querySelector('.element__delete-button').addEventListener('click', handleDeleteCard);
   cardName.textContent = card.name;
   cardPhoto.setAttribute('src', card.link);
   cardPhoto.setAttribute('alt', `Фотография ${card.name}`);
@@ -108,4 +108,9 @@ function handleNewPlaceFormSubmit (evt) {
   };
   cardList.prepend(createCard(newCard));
   closePopup(addNewPlacePopup);
-}
+};
+
+function handleDeleteCard(evt) {
+const thisElement = evt.target.closest('.element');
+thisElement.remove();
+};

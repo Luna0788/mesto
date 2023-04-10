@@ -83,6 +83,10 @@ function createCard(card) {
   const newCard = cardTemplate.cloneNode(true);
   const cardPhoto = newCard.querySelector('.element__photo');
   const cardName = newCard.querySelector('.element__name');
+  console.log(newCard.querySelector('.element__like-button'));
+  newCard.querySelector('.element__like-button').addEventListener('click', function(evt) {
+    evt.target.classList.toggle('element__like-button_active');
+  });
   cardName.textContent = card.name;
   cardPhoto.setAttribute('src', card.link);
   cardPhoto.setAttribute('alt', `Фотография ${card.name}`);

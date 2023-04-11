@@ -90,6 +90,7 @@ function createCard(card) {
   cardName.textContent = card.name;
   cardPhoto.setAttribute('src', card.link);
   cardPhoto.setAttribute('alt', `Фотография ${card.name}`);
+  cardPhoto.addEventListener('click', handleCardView);
   return newCard;
 }
 
@@ -113,4 +114,19 @@ function handleNewPlaceFormSubmit (evt) {
 function handleDeleteCard(evt) {
 const thisElement = evt.target.closest('.element');
 thisElement.remove();
+};
+
+const imagePopup = document.querySelector('.popup_type_image');
+const imageView = imagePopup.querySelector('.popup__image');
+
+function handleCardView (evt) {
+  let link = evt.target.getAttribute('src');
+  let alt = evt.target.getAttribute('alt');
+  const parentElement = evt.target.closest('.element');
+  let name = parentElement.querySelector('.element__name').textContent;
+
+  imageView.setAttribute('src', link);
+  imageView.setAttribute('alt', alt);
+  imagePopup.querySelector('.popup__heading_type_image').textContent = name;
+  openPopup(imagePopup);
 };

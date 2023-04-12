@@ -43,8 +43,8 @@
       <h2 class='popup__heading'>Редактировать профиль</h2>
       <form name="edit-form" class="popup__edit-form">
         <fieldset class="popup__input-container">
-          <input type="text" class="popup__input popup__input_type_name" name="name" placeholder="Имя">
-          <input type="text" class="popup__input popup__input_type_additional" name="additional" placeholder="О себе">
+          <input type="text" class="popup__input popup__input_type_name" name="name" placeholder="Имя" required>
+          <input type="text" class="popup__input popup__input_type_additional" name="additional" placeholder="О себе" required>
         </fieldset>
         <button class="button button_type_save" type="submit">Сохранить</button>
       </form>
@@ -57,8 +57,8 @@
       <h2 class='popup__heading'>Новое место</h2>
       <form name="new-place-form" class="popup__edit-form">
         <fieldset class="popup__input-container">
-          <input type="text" class="popup__input popup__input_type_place-name" name="place-name" placeholder="Название">
-          <input type="text" class="popup__input popup__input_type_picture-ref" name="picture-ref" placeholder="Ссылка на картинку">
+          <input type="text" class="popup__input popup__input_type_place-name" name="place-name" placeholder="Название" required>
+          <input type="text" class="popup__input popup__input_type_picture-ref" name="picture-ref" placeholder="Ссылка на картинку" required>
         </fieldset>
         <button class="button button_type_save" type="submit">Создать</button>
       </form>

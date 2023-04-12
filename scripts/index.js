@@ -92,7 +92,7 @@ function createCard(card) {
   cardName.textContent = card.name;
   cardPhoto.setAttribute('src', card.link);
   cardPhoto.setAttribute('alt', `Фотография ${card.name}`);
-  cardPhoto.addEventListener('click', handleCardView);
+  cardPhoto.addEventListener('click', () => openPopupImage(card.name, card.link));
   return newCard;
 }
 
@@ -123,15 +123,12 @@ thisElement.remove();
 
 const imagePopup = document.querySelector('.popup_type_image');
 const imageView = imagePopup.querySelector('.popup__image');
+const imageName = imagePopup.querySelector('.popup__heading_type_image');
 
-function handleCardView (evt) {
-  let link = evt.target.getAttribute('src');
-  let alt = evt.target.getAttribute('alt');
-  const parentElement = evt.target.closest('.element');
-  let name = parentElement.querySelector('.element__name').textContent;
-
+function openPopupImage (name, link) {
+  const alt =  `Фотография ${name}`;
   imageView.setAttribute('src', link);
   imageView.setAttribute('alt', alt);
-  imagePopup.querySelector('.popup__heading_type_image').textContent = name;
+  imageName.textContent = name;
   openPopup(imagePopup);
 };

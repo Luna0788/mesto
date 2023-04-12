@@ -61,6 +61,8 @@ editProfileButton.addEventListener('click', function() {
 });
 
 addNewPlaceButton.addEventListener('click', function() {
+  newPlaceName.value = '';
+  newPlaceLink.value = '';
   openPopup(addNewPlacePopup);
 });
 
@@ -101,11 +103,14 @@ initialCards.forEach(card => {
 const newPlaceForm = document.forms['new-place-form'];
 newPlaceForm.addEventListener('submit', handleNewPlaceFormSubmit);
 
+const newPlaceName = newPlaceForm.querySelector('.popup__input_type_place-name');
+const newPlaceLink = newPlaceForm.querySelector('.popup__input_type_picture-ref');
+
 function handleNewPlaceFormSubmit (evt) {
   evt.preventDefault();
   const newCard = {
-    name: newPlaceForm.querySelector('.popup__input_type_place-name').value,
-    link: newPlaceForm.querySelector('.popup__input_type_picture-ref').value
+    name: newPlaceName.value,
+    link: newPlaceLink.value
   };
   cardList.prepend(createCard(newCard));
   closePopup(addNewPlacePopup);

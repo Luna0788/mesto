@@ -79,7 +79,7 @@ const formEditProfile = document.forms['edit-form'];
 formEditProfile.addEventListener('submit', handleEditFormSubmit);
 
 const cardList =  document.querySelector('.element-list');
-const cardTemplate = document.querySelector('#elementTemplate').content;
+const cardTemplate = document.querySelector('#elementTemplate').content.querySelector('.element');
 
 function createCard(card) {
   const newCard = cardTemplate.cloneNode(true);

@@ -25,28 +25,28 @@ const initialCards = [
   }
 ];
 
-const editProfileButton = document.querySelector('.button_type_edit');
-const editProfilePopup = document.querySelector('.popup_type_profile-edit');
+const buttonOpenPopupProfile = document.querySelector('.button_type_edit');
+const popupProfile = document.querySelector('.popup_type_profile-edit');
 
-const closePopupButtons = document.querySelectorAll('.popup__toggle');
-closePopupButtons.forEach((closeButton) => closeButton.addEventListener('click', function (evt) {
+const buttonsClosePopups = document.querySelectorAll('.popup__toggle');
+buttonsClosePopups.forEach((closeButton) => closeButton.addEventListener('click', function (evt) {
   const thisPopup = evt.target.closest('.popup');
   closePopup(thisPopup);
 }));
 
-const addNewPlaceButton = document.querySelector('.button_type_add');
-const addNewPlacePopup = document.querySelector('.popup_type_new-place');
+const buttonAddNewCard = document.querySelector('.button_type_add');
+const popupAddNewPlace = document.querySelector('.popup_type_new-place');
 
 const userNameElement = document.querySelector('.profile__name');
-let userName = userNameElement.textContent;
+const userName = userNameElement.textContent;
 const userAboutElement = document.querySelector('.profile__additional');
-let userAbout = userAboutElement.textContent;
+const userAbout = userAboutElement.textContent;
 
-const userNameInput = document.querySelector('.popup__input_type_name');
-userNameInput.value = userName;
+const inputUserName = document.querySelector('.popup__input_type_name');
+inputUserName.value = userName;
 
-const userAboutInput = document.querySelector('.popup__input_type_additional');
-userAboutInput.value = userAbout;
+const inputUserAbout = document.querySelector('.popup__input_type_additional');
+inputUserAbout.value = userAbout;
 
 function openPopup(popup) {
   popup.classList.add('popup_opened');
@@ -56,27 +56,27 @@ function closePopup(popup) {
   popup.classList.remove('popup_opened');
 }
 
-editProfileButton.addEventListener('click', function() {
-  openPopup(editProfilePopup);
+buttonOpenPopupProfile.addEventListener('click', function() {
+  openPopup(popupProfile);
 });
 
-addNewPlaceButton.addEventListener('click', function() {
+buttonAddNewCard.addEventListener('click', function() {
   newPlaceName.value = '';
   newPlaceLink.value = '';
-  openPopup(addNewPlacePopup);
+  openPopup(popupAddNewPlace);
 });
 
 function handleEditFormSubmit (evt) {
   evt.preventDefault();
-  let newUserName = userNameInput.value;
-  let newUserAbout = userAboutInput.value;
+  const newUserName = inputUserName.value;
+  const newUserAbout = inputUserAbout.value;
   userNameElement.textContent = newUserName;
   userAboutElement.textContent = newUserAbout;
-  closePopup(editProfilePopup);
+  closePopup(popupProfile);
 }
 
-const editForm = document.forms['edit-form'];
-editForm.addEventListener('submit', handleEditFormSubmit);
+const formEditProfile = document.forms['edit-form'];
+formEditProfile.addEventListener('submit', handleEditFormSubmit);
 
 const cardList =  document.querySelector('.element-list');
 const cardTemplate = document.querySelector('#elementTemplate').content;
@@ -100,11 +100,11 @@ initialCards.forEach(card => {
   cardList.append(createCard(card));
 });
 
-const newPlaceForm = document.forms['new-place-form'];
-newPlaceForm.addEventListener('submit', handleNewPlaceFormSubmit);
+const formAddNewPlace = document.forms['new-place-form'];
+formAddNewPlace.addEventListener('submit', handleNewPlaceFormSubmit);
 
-const newPlaceName = newPlaceForm.querySelector('.popup__input_type_place-name');
-const newPlaceLink = newPlaceForm.querySelector('.popup__input_type_picture-ref');
+const newPlaceName = formAddNewPlace.querySelector('.popup__input_type_place-name');
+const newPlaceLink = formAddNewPlace.querySelector('.popup__input_type_picture-ref');
 
 function handleNewPlaceFormSubmit (evt) {
   evt.preventDefault();
@@ -113,7 +113,7 @@ function handleNewPlaceFormSubmit (evt) {
     link: newPlaceLink.value
   };
   cardList.prepend(createCard(newCard));
-  closePopup(addNewPlacePopup);
+  closePopup(popupAddNewPlace);
 };
 
 function handleDeleteCard(evt) {

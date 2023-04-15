@@ -30,7 +30,7 @@ function openPopup(popup) {
 
 function handleClickClosePopup(evt) {
   if (evt.target.classList.contains('popup_opened')) {
-    const openedPopup = document.querySelector('.popup_opened');
+    const openedPopup = evt.target;
     closePopup(openedPopup);
   }
 }
@@ -53,8 +53,7 @@ buttonOpenPopupProfile.addEventListener('click', function() {
 });
 
 buttonAddNewCard.addEventListener('click', function() {
-  newPlaceName.value = '';
-  newPlaceLink.value = '';
+  formAddNewPlace.reset();
   openPopup(popupAddNewPlace);
 });
 
@@ -106,6 +105,7 @@ function handleNewPlaceFormSubmit (evt) {
   };
   cardList.prepend(createCard(newCard));
   closePopup(popupAddNewPlace);
+  disableButton(evt.target.querySelector('.popup__button'));
 };
 
 function handleDeleteCard(evt) {

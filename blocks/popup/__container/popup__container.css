@@ -4,7 +4,8 @@
   flex-direction: column;
   align-self: center;
   margin: 0 auto;
-  height: 330px;
+  justify-content: space-between;
+  min-height: 330px;
   width: 430px;
   background-color: #fff;
   box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);

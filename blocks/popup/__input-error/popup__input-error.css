@@ -3,7 +3,7 @@
   font-size: 12px;
   line-height: 15px;
   color: #F00;
-  position: absolute;
+  /* position: absolute; */
   top: calc(100% + 2px);
   left: 0;
 }

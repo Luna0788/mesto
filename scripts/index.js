@@ -24,7 +24,15 @@ inputUserAbout.value = userAbout;
 
 function openPopup(popup) {
   popup.classList.add('popup_opened');
+  popup.addEventListener('click', handleClickClosePopup);
   document.addEventListener('keydown', handleEscapeClosePopup);
+}
+
+function handleClickClosePopup(evt) {
+  if (evt.target.classList.contains('popup_opened')) {
+    const openedPopup = document.querySelector('.popup_opened');
+    closePopup(openedPopup);
+  }
 }
 
 function handleEscapeClosePopup(evt) {
@@ -37,6 +45,7 @@ function handleEscapeClosePopup(evt) {
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
   document.removeEventListener('keydown', handleEscapeClosePopup);
+  popup.removeEventListener('click', handleClickClosePopup);
 }
 
 buttonOpenPopupProfile.addEventListener('click', function() {

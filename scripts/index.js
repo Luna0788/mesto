@@ -1,3 +1,4 @@
+import  {Card}  from "./card.js";
 
 const buttonOpenPopupProfile = document.querySelector('.button_type_edit');
 const popupProfile = document.querySelector('.popup_type_profile-edit');
@@ -70,25 +71,11 @@ const formEditProfile = document.forms['edit-form'];
 formEditProfile.addEventListener('submit', handleEditFormSubmit);
 
 const cardList =  document.querySelector('.element-list');
-const cardTemplate = document.querySelector('#elementTemplate').content.querySelector('.element');
+const cardTemplate = document.querySelector('#elementTemplate').content.children[0];
 
-function createCard(card) {
-  const newCard = cardTemplate.cloneNode(true);
-  const cardPhoto = newCard.querySelector('.element__photo');
-  const cardName = newCard.querySelector('.element__name');
-  newCard.querySelector('.element__like-button').addEventListener('click', function(evt) {
-    evt.target.classList.toggle('element__like-button_active');
-  });
-  newCard.querySelector('.element__delete-button').addEventListener('click', handleDeleteCard);
-  cardName.textContent = card.name;
-  cardPhoto.setAttribute('src', card.link);
-  cardPhoto.setAttribute('alt', `Фотография ${card.name}`);
-  cardPhoto.addEventListener('click', () => openPopupImage(card.name, card.link));
-  return newCard;
-}
-
-initialCards.forEach(card => {
-  cardList.append(createCard(card));
+initialCards.forEach(cardData => {
+  const newCard = new Card(cardData, '#elementTemplate', openPopupImage).returnCard();
+  cardList.append(newCard);
 });
 
 const formAddNewPlace = document.forms['new-place-form'];
@@ -99,18 +86,14 @@ const newPlaceLink = formAddNewPlace.querySelector('.popup__input_type_picture-r
 
 function handleNewPlaceFormSubmit (evt) {
   evt.preventDefault();
-  const newCard = {
+  const newCardData = {
     name: newPlaceName.value,
     link: newPlaceLink.value
   };
-  cardList.prepend(createCard(newCard));
+  const newCard = new Card(newCardData, '#elementTemplate', openPopupImage).returnCard();
+  cardList.prepend(newCard);
   closePopup(popupAddNewPlace);
   disableButton(evt.target.querySelector('.popup__button'));
-};
-
-function handleDeleteCard(evt) {
-const thisElement = evt.target.closest('.element');
-thisElement.remove();
 };
 
 const imagePopup = document.querySelector('.popup_type_image');

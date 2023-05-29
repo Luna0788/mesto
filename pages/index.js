@@ -57,6 +57,7 @@ buttonOpenPopupProfile.addEventListener('click', function() {
   inputUserName.value = userName;
   const userAbout = userAboutElement.textContent;
   inputUserAbout.value = userAbout;
+  validationEditProfile.resetInputErrors();
   openPopup(popupProfile);
 });
 

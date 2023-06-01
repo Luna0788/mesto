@@ -1,6 +1,8 @@
-import  { Card }  from "../scripts/card.js";
-import { initialCards } from '../scripts/cards.js';
-import { FormValidator } from "../scripts/formValidator.js";
+import  { Card }  from "../components/card.js";
+import { initialCards } from '../utils/constants.js';
+import { FormValidator } from "../components/formValidator.js";
+import PopupWithImage from "../components/PopupWithImage.js";
+import Section from "../components/Section.js";
 
 const validationConfig = {
   formSelector: '.popup__edit-form',
@@ -82,14 +84,21 @@ const validationEditProfile = new FormValidator (validationConfig, formEditProfi
 validationEditProfile.enableValidation();
 formEditProfile.addEventListener('submit', handleEditFormSubmit);
 
-const cardList =  document.querySelector('.element-list');
+const cardList =  new Section({
+  items: initialCards,
+  renderer: (item) => {
+    const card = createCard(item);
+    cardList.addItem(card);
+  }
+  }, '.element-list');
 
-initialCards.forEach(cardData => {
-  cardList.append(createCard(cardData));
-});
+cardList.renderItems();
+
+const imagePopup = new PopupWithImage('.popup_type_image');
+imagePopup.setEventListeners();
 
 function createCard(cardData) {
-  const newCard = new Card(cardData, '#elementTemplate', openPopupImage).returnCard();
+  const newCard = new Card(cardData, '#elementTemplate', () => imagePopup.open(cardData)).returnCard();
   return newCard;
 };
 
@@ -113,7 +122,7 @@ function handleNewPlaceFormSubmit (evt) {
   validationAddNewPlace.disableButton();
 };
 
-const imagePopup = document.querySelector('.popup_type_image');
+/*const imagePopup = document.querySelector('.popup_type_image');
 const imageView = imagePopup.querySelector('.popup__image');
 const imageName = imagePopup.querySelector('.popup__heading_type_image');
 
@@ -123,4 +132,5 @@ function openPopupImage (name, link) {
   imageView.setAttribute('alt', alt);
   imageName.textContent = name;
   openPopup(imagePopup);
-};
+};*/
+

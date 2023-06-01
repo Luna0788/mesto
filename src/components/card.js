@@ -21,7 +21,7 @@ export class Card {
     this._card.querySelector('.element__like-button').addEventListener('click',this._onLike);
     this._card.querySelector('.element__delete-button').addEventListener('click', this._onDelete);
     this._cardPhoto.addEventListener('click', () => {
-      this._handleCardClick(this._data.name, this._data.link);
+      this._handleCardClick(this._data);
     });
   }
 

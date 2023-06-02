@@ -2,7 +2,7 @@ export class FormValidator {
   constructor(validationData, formToValidate) {
     this._data = validationData;
     this._form = formToValidate;
-    this._formInputs = Array.from(formToValidate.querySelectorAll(this._data.inputSelector));
+    this._formInputs = Array.from(this._form.querySelectorAll(this._data.inputSelector));
     this._formButton = formToValidate.querySelector(this._data.submitButtonSelector);
     this._inputErrorClass = validationData._inputErrorClass;
   }

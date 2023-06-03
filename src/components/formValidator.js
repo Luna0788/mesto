@@ -59,7 +59,7 @@ export class FormValidator {
   };
 
   disableButton = () => {
-    this._formButton.setAttribute('disabled', true);
+    this._formButton.disabled = true;
   };
 
   enableButton = () => {

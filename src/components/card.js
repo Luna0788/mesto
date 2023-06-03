@@ -1,7 +1,7 @@
 export class Card {
 
-  constructor (cardData, cardTemplateselector, handleCardClick) {
-    this._template = document.querySelector(cardTemplateselector).content.children[0];
+  constructor (cardData, cardTemplateSelector, handleCardClick) {
+    this._template = document.querySelector(cardTemplateSelector).content.children[0];
     this._card = this._template.cloneNode(true);
     this._data = cardData;
     this._cardPhoto = this._card.querySelector('.element__photo');
@@ -11,14 +11,15 @@ export class Card {
 
 
   _createCard () {
-    this._cardPhoto.setAttribute('src', this._data.link);
-    this._cardPhoto.setAttribute('alt', `Фотография ${this._data.name}`);
+    this._cardPhoto.src = this._data.link;
+    this._cardPhoto.alt = `Фотография ${this._data.name}`;
     this._placeName.textContent = this._data.name;
     this._setEventListeners();
   }
 
   _setEventListeners () {
-    this._card.querySelector('.element__like-button').addEventListener('click',this._onLike);
+    this._likeButton = this._card.querySelector('.element__like-button');
+    this._likeButton.addEventListener('click',this._onLike);
     this._card.querySelector('.element__delete-button').addEventListener('click', this._onDelete);
     this._cardPhoto.addEventListener('click', () => {
       this._handleCardClick(this._data);
@@ -27,7 +28,7 @@ export class Card {
 
 
   _onLike = (evt) => {
-    evt.target.classList.toggle('element__like-button_active');
+    this._likeButton.classList.toggle('element__like-button_active');
   }
 
   _onDelete =() => {

@@ -16,7 +16,6 @@ const inputUserName = document.querySelector(".popup__input_type_name");
 const inputUserAbout = document.querySelector(".popup__input_type_additional");
 const formEditProfile = document.forms["edit-form"];
 const formAddNewPlace = document.forms["new-place-form"];
-let userId;
 let cardsSection;
 const apiOptions = {
   baseUrl: "https://mesto.nomoreparties.co/v1/cohort-66",
@@ -25,6 +24,13 @@ const apiOptions = {
     "Content-Type": "application/json",
   },
 };
+
+const userInfo = new UserInfo({
+  selectorUserName: ".profile__name",
+  selectorUserInfo: ".profile__additional",
+  selectorAvatar: '.profile__avatar',
+  userId: ''
+});
 
 const api = new Api(apiOptions);
 
@@ -52,10 +58,7 @@ const popupFormConfirmationDelete = new PopupWithConfirmation(
 );
 popupFormConfirmationDelete.setEventListeners();
 
-const userInfo = new UserInfo({
-  selectorUserName: ".profile__name",
-  selectorUserInfo: ".profile__additional",
-});
+
 
 //получение информации о пользователе с сервера...
 api
@@ -64,8 +67,9 @@ api
     userInfo.setUserInfo({
       userName: data.name,
       userInfo: data.about,
+      avatarLink: data.avatar,
+      userId: data._id
     });
-    userId = data._id;
   })
   .catch((err) => console.log(err));
 
@@ -141,7 +145,7 @@ function handleConfirmationDeleteSubmit(cardToDelete) {
 }
 
 function createCard(cardData) {
-  const newCard = new Card(cardData, userId, "#elementTemplate",
+  const newCard = new Card(cardData, userInfo.getUserInfo().userId, "#elementTemplate",
   handleCardClick, handleDeleteCardClick, handleLikeCardClick, handleDeleteLikeCardClick)
   .returnCard();
   return newCard;

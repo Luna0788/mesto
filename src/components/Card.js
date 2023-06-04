@@ -49,6 +49,8 @@ export default class Card {
   }
 
   _addTrashButton () {
+    //console.log(this._data.owner['_id']);
+    //console.log(this._userId);
     if (this._data.owner['_id'] === this._userId) {
       this._trashButton = this._card.querySelector('.element__delete-button');
     }

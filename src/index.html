@@ -16,6 +16,7 @@
     <section class="profile">
       <div class="profile__main">
         <img src="<%=require('./images/avatar.jpg')%>" alt="Аватар пользователя" class="profile__avatar">
+        <div class="profile__avatar-overlay"></div>
         <div class="profile__info">
           <div class="profile__name-wrapper">
             <h1 class="profile__name">Жак-Ив Кусто</h1>
@@ -72,6 +73,22 @@
           </label>
         </fieldset>
         <button class="button popup__button button_type_save" type="submit">Создать</button>
+      </form>
+      <button type="button" aria-label="Закрыть" class="button popup__toggle"></button>
+    </div>
+  </div>
+
+  <div class="popup popup_type_avatar-edit">
+    <div class="popup__container popup__container_type_avatar">
+      <h2 class='popup__heading'>Обновить аватар</h2>
+      <form name="avatar-edit-form" class="popup__edit-form" novalidate>
+        <fieldset class="popup__input-container">
+          <label class="popup__field">
+            <input type="url" id="avatar-ref-input" class="popup__input popup__input_type_avatar-ref" name="avatar-ref" placeholder="Ссылка на картинку" required>
+            <span class="popup__input-error avatar-ref-input-error"></span>
+          </label>
+        </fieldset>
+        <button class="button popup__button button_type_save" type="submit">Сохранить</button>
       </form>
       <button type="button" aria-label="Закрыть" class="button popup__toggle"></button>
     </div>

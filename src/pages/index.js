@@ -1,6 +1,6 @@
 import "./index.css";
 
-import  Card  from "../components/card.js";
+import Card from "../components/card.js";
 import { initialCards, validationConfig } from "../utils/constants.js";
 import { FormValidator } from "../components/FormValidator.js";
 import PopupWithImage from "../components/PopupWithImage.js";
@@ -12,10 +12,12 @@ import PopupWithConfirmation from "../components/PopupWithConfirmation.js";
 
 const buttonOpenPopupProfile = document.querySelector(".button_type_edit");
 const buttonAddNewCard = document.querySelector(".button_type_add");
+const buttonEditAvatar = document.querySelector(".profile__avatar-overlay");
 const inputUserName = document.querySelector(".popup__input_type_name");
 const inputUserAbout = document.querySelector(".popup__input_type_additional");
 const formEditProfile = document.forms["edit-form"];
 const formAddNewPlace = document.forms["new-place-form"];
+const formEditAvatar = document.forms["avatar-edit-form"];
 let cardsSection;
 const apiOptions = {
   baseUrl: "https://mesto.nomoreparties.co/v1/cohort-66",
@@ -28,8 +30,8 @@ const apiOptions = {
 const userInfo = new UserInfo({
   selectorUserName: ".profile__name",
   selectorUserInfo: ".profile__additional",
-  selectorAvatar: '.profile__avatar',
-  userId: ''
+  selectorAvatar: ".profile__avatar",
+  userId: "",
 });
 
 const api = new Api(apiOptions);
@@ -52,13 +54,22 @@ const validationAddNewPlace = new FormValidator(
   formAddNewPlace
 );
 
+const popupFormEditAvatar = new PopupWithForm(
+  ".popup_type_avatar-edit",
+  handleEditAvatarFormSubmit
+);
+popupFormEditAvatar.setEventListeners();
+const validationEditAvatar = new FormValidator(
+  validationConfig,
+  formEditAvatar
+);
+validationEditAvatar.enableValidation();
+
 const popupFormConfirmationDelete = new PopupWithConfirmation(
-  '.popup_type_confirmation',
+  ".popup_type_confirmation",
   handleConfirmationDeleteSubmit
 );
 popupFormConfirmationDelete.setEventListeners();
-
-
 
 //получение информации о пользователе с сервера...
 api
@@ -68,7 +79,7 @@ api
       userName: data.name,
       userInfo: data.about,
       avatarLink: data.avatar,
-      userId: data._id
+      userId: data._id,
     });
   })
   .catch((err) => console.log(err));
@@ -113,6 +124,14 @@ buttonAddNewCard.addEventListener("click", function () {
   popupFormAddNewPlace.open();
 });
 
+buttonEditAvatar.addEventListener("click", handleEditAvatarClick);
+
+function handleEditAvatarClick() {
+  validationEditAvatar.disableButton();
+  validationEditAvatar.resetInputErrors();
+  popupFormEditAvatar.open();
+}
+
 function handleEditFormSubmit(newData) {
   //обновление данных пользователя на сервере
   api
@@ -124,12 +143,33 @@ function handleEditFormSubmit(newData) {
       userInfo.setUserInfo({
         userName: data.name,
         userInfo: data.about,
+        avatarLink: data.avatar,
+        userId: data._id,
       });
     })
     .catch((err) => {
       console.log(err);
     });
   popupFormEditProfile.close();
+}
+
+function handleEditAvatarFormSubmit(newData) {
+  api
+    .patchAvatar({
+      avatar: newData["avatar-ref"],
+    })
+    .then((data) => {
+      userInfo.setUserInfo({
+        userName: data.name,
+        userInfo: data.about,
+        avatarLink: data.avatar,
+        userId: data._id,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+    popupFormEditAvatar.close();
 }
 
 function handleConfirmationDeleteSubmit(cardToDelete) {
@@ -140,14 +180,20 @@ function handleConfirmationDeleteSubmit(cardToDelete) {
     })
     .catch((err) => {
       console.log(err);
-    })
+    });
   popupFormConfirmationDelete.close();
 }
 
 function createCard(cardData) {
-  const newCard = new Card(cardData, userInfo.getUserInfo().userId, "#elementTemplate",
-  handleCardClick, handleDeleteCardClick, handleLikeCardClick, handleDeleteLikeCardClick)
-  .returnCard();
+  const newCard = new Card(
+    cardData,
+    userInfo.getUserInfo().userId,
+    "#elementTemplate",
+    handleCardClick,
+    handleDeleteCardClick,
+    handleLikeCardClick,
+    handleDeleteLikeCardClick
+  ).returnCard();
   return newCard;
 }
 
@@ -160,7 +206,8 @@ function handleDeleteCardClick(card) {
 }
 
 function handleLikeCardClick(card) {
-  api.putLikes(card.getId())
+  api
+    .putLikes(card.getId())
     .then((data) => {
       card.updateCardInfo(data);
     })
@@ -170,7 +217,8 @@ function handleLikeCardClick(card) {
 }
 
 function handleDeleteLikeCardClick(card) {
-  api.deleteLikes(card.getId())
+  api
+    .deleteLikes(card.getId())
     .then((data) => {
       card.updateCardInfo(data);
     })

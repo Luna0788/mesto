@@ -7,6 +7,7 @@ import PopupWithImage from "../components/PopupWithImage.js";
 import Section from "../components/Section.js";
 import UserInfo from "../components/UserInfo.js";
 import PopupWithForm from "../components/PopupWithForm.js";
+import Api from "../components/Api.js";
 
 const buttonOpenPopupProfile = document.querySelector(".button_type_edit");
 const buttonAddNewCard = document.querySelector(".button_type_add");
@@ -14,12 +15,16 @@ const inputUserName = document.querySelector(".popup__input_type_name");
 const inputUserAbout = document.querySelector(".popup__input_type_additional");
 const formEditProfile = document.forms["edit-form"];
 const formAddNewPlace = document.forms["new-place-form"];
-const newPlaceName = formAddNewPlace.querySelector(
-  ".popup__input_type_place-name"
-);
-const newPlaceLink = formAddNewPlace.querySelector(
-  ".popup__input_type_picture-ref"
-);
+
+const apiOptions = {
+  baseUrl: "https://mesto.nomoreparties.co/v1/cohort-66",
+  headers: {
+    authorization: "eeea63f2-ab02-4294-9d67-84220d1763e5",
+    "Content-Type": "application/json",
+  },
+};
+
+const api = new Api(apiOptions);
 
 const popupFormEditProfile = new PopupWithForm(
   ".popup_type_profile-edit",
@@ -43,6 +48,27 @@ const userInfo = new UserInfo({
   selectorUserName: ".profile__name",
   selectorUserInfo: ".profile__additional",
 });
+
+//получение информации о пользователе с сервера...
+api
+  .getUserInfo()
+  .then((data) => {
+    userInfo.setUserInfo({
+      userName: data.name,
+      userInfo: data.about,
+    });
+  })
+  .catch((err) => console.log(err));
+
+//получение карточек с сервера и их загрузка в случае успеха...
+api
+  .getInitialCards()
+  .then((data) => {
+    cardsSection.renderItems(data);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 const cardsSection = new Section(
   {
@@ -77,11 +103,21 @@ buttonAddNewCard.addEventListener("click", function () {
 });
 
 function handleEditFormSubmit(newData) {
-  const newUserData = {
-    userName: newData.name,
-    userInfo: newData.additional,
-  };
-  userInfo.setUserInfo(newUserData);
+  //обновление данных пользователя на сервере
+  api
+    .patchUserInfo({
+      name: newData.name,
+      about: newData.additional,
+    })
+    .then((data) => {
+      userInfo.setUserInfo({
+        userName: data.name,
+        userInfo: data.about,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   popupFormEditProfile.close();
 }
 
@@ -97,7 +133,18 @@ function handleNewPlaceFormSubmit(newData) {
     name: newData["place-name"],
     link: newData["picture-ref"],
   };
-  cardsSection.addItem(createCard(newCardData));
+  //добавление новой карточки на сервер
+  api
+    .postNewCard({
+      name: newData["place-name"],
+      link: newData["picture-ref"],
+    })
+    .then((data) => {
+      cardsSection.addItem(createCard(data));
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   popupFormAddNewPlace.close();
   validationAddNewPlace.disableButton();
 }

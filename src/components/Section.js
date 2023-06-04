@@ -6,7 +6,10 @@ export default class Section {
   };
 
   //публичный метод который отвечает за отрисовку всех элементов
-  renderItems() {
+  renderItems(items) {
+    if (items) {
+      this._renderedItems = items;
+    }
     this._renderedItems.reverse().forEach(item => this._renderer(item));
   };
 

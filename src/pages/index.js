@@ -141,7 +141,9 @@ function handleConfirmationDeleteSubmit(cardToDelete) {
 }
 
 function createCard(cardData) {
-  const newCard = new Card(cardData, userId, "#elementTemplate", handleCardClick, handleDeleteCardClick).returnCard();
+  const newCard = new Card(cardData, userId, "#elementTemplate",
+  handleCardClick, handleDeleteCardClick, handleLikeCardClick, handleDeleteLikeCardClick)
+  .returnCard();
   return newCard;
 }
 
@@ -151,6 +153,26 @@ function handleCardClick(cardData) {
 
 function handleDeleteCardClick(card) {
   popupFormConfirmationDelete.open(card);
+}
+
+function handleLikeCardClick(card) {
+  api.putLikes(card.getId())
+    .then((data) => {
+      card.updateCardInfo(data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+
+function handleDeleteLikeCardClick(card) {
+  api.deleteLikes(card.getId())
+    .then((data) => {
+      card.updateCardInfo(data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 }
 
 function handleNewPlaceFormSubmit(newData) {

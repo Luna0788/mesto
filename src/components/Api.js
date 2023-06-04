@@ -59,4 +59,22 @@ export default class Api {
     })
     .then((res) => this._checkStatus(res));
   }
+
+  //Постановка лайка
+  putLikes(cardID) {
+    return fetch(`${this._baseUrl}/cards/${cardID}/likes`, {
+      method: 'PUT',
+      headers: this._headers,
+    })
+    .then((res) => this._checkStatus(res));
+  }
+
+  //удаление лайка
+  deleteLikes(cardID) {
+    return fetch(`${this._baseUrl}/cards/${cardID}/likes`, {
+      method: 'DELETE',
+      headers: this._headers,
+    })
+    .then((res) => this._checkStatus(res));
+  }
 }

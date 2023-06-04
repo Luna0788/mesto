@@ -176,10 +176,6 @@ function handleDeleteLikeCardClick(card) {
 }
 
 function handleNewPlaceFormSubmit(newData) {
-  /*const newCardData = {
-    name: newData["place-name"],
-    link: newData["picture-ref"],
-  };*/
   //добавление новой карточки на сервер
   api
     .postNewCard({

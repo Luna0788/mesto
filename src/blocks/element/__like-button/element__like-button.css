@@ -6,7 +6,8 @@
   background-position: center;
   background-size: contain;
   background-repeat: no-repeat;
-  margin: 5px 5px 1px 30px;
+  margin: 0;
+  padding: 0;
   flex-shrink: 0;
 }
 

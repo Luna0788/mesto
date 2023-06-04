@@ -50,4 +50,13 @@ export default class Api {
     })
     .then((res) => this._checkStatus(res));
   }
+
+  //Удаление карточки
+  deleteCard(cardID) {
+    return fetch(`${this._baseUrl}/cards/${cardID}`, {
+      method: 'DELETE',
+      headers: this._headers,
+    })
+    .then((res) => this._checkStatus(res));
+  }
 }

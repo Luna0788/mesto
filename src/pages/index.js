@@ -1,6 +1,6 @@
 import "./index.css";
 
-import { Card } from "../components/Card.js";
+import  Card  from "../components/card.js";
 import { initialCards, validationConfig } from "../utils/constants.js";
 import { FormValidator } from "../components/FormValidator.js";
 import PopupWithImage from "../components/PopupWithImage.js";
@@ -8,6 +8,7 @@ import Section from "../components/Section.js";
 import UserInfo from "../components/UserInfo.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import Api from "../components/Api.js";
+import PopupWithConfirmation from "../components/PopupWithConfirmation.js";
 
 const buttonOpenPopupProfile = document.querySelector(".button_type_edit");
 const buttonAddNewCard = document.querySelector(".button_type_add");
@@ -15,7 +16,8 @@ const inputUserName = document.querySelector(".popup__input_type_name");
 const inputUserAbout = document.querySelector(".popup__input_type_additional");
 const formEditProfile = document.forms["edit-form"];
 const formAddNewPlace = document.forms["new-place-form"];
-
+let userId;
+let cardsSection;
 const apiOptions = {
   baseUrl: "https://mesto.nomoreparties.co/v1/cohort-66",
   headers: {
@@ -44,6 +46,12 @@ const validationAddNewPlace = new FormValidator(
   formAddNewPlace
 );
 
+const popupFormConfirmationDelete = new PopupWithConfirmation(
+  '.popup_type_confirmation',
+  handleConfirmationDeleteSubmit
+);
+popupFormConfirmationDelete.setEventListeners();
+
 const userInfo = new UserInfo({
   selectorUserName: ".profile__name",
   selectorUserInfo: ".profile__additional",
@@ -57,6 +65,7 @@ api
       userName: data.name,
       userInfo: data.about,
     });
+    userId = data._id;
   })
   .catch((err) => console.log(err));
 
@@ -64,24 +73,22 @@ api
 api
   .getInitialCards()
   .then((data) => {
+    cardsSection = new Section(
+      {
+        items: data,
+        renderer: (item) => {
+          const card = createCard(item);
+          cardsSection.addItem(card);
+        },
+      },
+      ".element-list"
+    );
     cardsSection.renderItems(data);
   })
   .catch((err) => {
     console.log(err);
   });
 
-const cardsSection = new Section(
-  {
-    items: initialCards,
-    renderer: (item) => {
-      const card = createCard(item);
-      cardsSection.addItem(card);
-    },
-  },
-  ".element-list"
-);
-
-cardsSection.renderItems();
 popupFormEditProfile.setEventListeners();
 validationEditProfile.enableValidation();
 imagePopup.setEventListeners();
@@ -121,18 +128,36 @@ function handleEditFormSubmit(newData) {
   popupFormEditProfile.close();
 }
 
+function handleConfirmationDeleteSubmit(cardToDelete) {
+  api
+    .deleteCard(cardToDelete.getId())
+    .then(() => {
+      cardToDelete.delete();
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  popupFormConfirmationDelete.close();
+}
+
 function createCard(cardData) {
-  const newCard = new Card(cardData, "#elementTemplate", () =>
-    imagePopup.open(cardData)
-  ).returnCard();
+  const newCard = new Card(cardData, userId, "#elementTemplate", handleCardClick, handleDeleteCardClick).returnCard();
   return newCard;
 }
 
+function handleCardClick(cardData) {
+  imagePopup.open(cardData);
+}
+
+function handleDeleteCardClick(card) {
+  popupFormConfirmationDelete.open(card);
+}
+
 function handleNewPlaceFormSubmit(newData) {
-  const newCardData = {
+  /*const newCardData = {
     name: newData["place-name"],
     link: newData["picture-ref"],
-  };
+  };*/
   //добавление новой карточки на сервер
   api
     .postNewCard({

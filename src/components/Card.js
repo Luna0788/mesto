@@ -4,6 +4,8 @@ export default class Card {
     this._template = document.querySelector(cardTemplateSelector).content.children[0];
     this._card = this._template.cloneNode(true);
     this._data = cardData;
+    this._likes = this._data.likes;
+    this._likeButton = this._card.querySelector('.element__like-button');
     this._cardPhoto = this._card.querySelector('.element__photo');
     this._placeName = this._card.querySelector('.element__name');
     this._likeCounter = this._card.querySelector('.element__like-counter');
@@ -23,18 +25,16 @@ export default class Card {
     this._placeName.textContent = this._data.name;
     this._likeCounter.textContent = this._data.likes && this._data.likes.length ? this._data.likes.length : '';
     this._addTrashButton();
+    this._checkOnewrsLike();
     this._setEventListeners();
   }
 
   _setEventListeners () {
-    this._likeButton = this._card.querySelector('.element__like-button');
     this._likeButton.addEventListener('click',() => {
       if (this._likeButton.classList.contains('element__like-button_active')) {
-        this._likeButton.classList.remove('element__like-button_active');
         this._handleDeleteLikeClick(this);
       }
       else {
-        this._likeButton.classList.add('element__like-button_active');
         this._handleLikeClick(this);
       }
     });
@@ -49,18 +49,12 @@ export default class Card {
   }
 
   _addTrashButton () {
-    //console.log(this._data.owner['_id']);
-    //console.log(this._userId);
     if (this._data.owner['_id'] === this._userId) {
       this._trashButton = this._card.querySelector('.element__delete-button');
     }
     else {
       this._card.removeChild(this._card.querySelector('.element__delete-button'));
     }
-  }
-
-  _onLike = () => {
-    this._likeButton.classList.toggle('element__like-button_active');
   }
 
   delete =() => {
@@ -74,11 +68,22 @@ export default class Card {
 
   updateCardInfo(newData) {
     this._data = newData;
-    this._likeCounter.textContent = this._data.likes && this._data.likes.length ? this._data.likes.length : '';
+    this._likes = this._data.likes;
+    this._checkOnewrsLike();
+    this._likeCounter.textContent = this._likes && this._likes.length ? this._likes.length : '';
   }
 
   getId() {
     return this._data._id;
+  }
+
+  _checkOnewrsLike() {
+    if (this._likes.some((user) =>  user._id === this._userId)) {
+      this._likeButton.classList.add('element__like-button_active');
+    }
+    else {
+      this._likeButton.classList.remove('element__like-button_active');
+    }
   }
 }
 

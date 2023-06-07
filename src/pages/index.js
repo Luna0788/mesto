@@ -71,26 +71,21 @@ const popupFormConfirmationDelete = new PopupWithConfirmation(
 );
 popupFormConfirmationDelete.setEventListeners();
 
-//получение информации о пользователе с сервера...
-api
-  .getUserInfo()
-  .then((data) => {
+//объединение запроса
+Promise
+  .all([api.getUserInfo(), api.getInitialCards()])
+  .then(([userData, cards]) => {
+    //установка данных пользователя
     userInfo.setUserInfo({
-      userName: data.name,
-      userInfo: data.about,
-      avatarLink: data.avatar,
-      userId: data._id,
+      userName: userData.name,
+      userInfo: userData.about,
+      avatarLink: userData.avatar,
+      userId: userData._id
     });
-  })
-  .catch((err) => console.log(err));
-
-//получение карточек с сервера и их загрузка в случае успеха...
-api
-  .getInitialCards()
-  .then((data) => {
+    // и тут отрисовка карточек
     cardsSection = new Section(
       {
-        items: data,
+        items: cards,
         renderer: (item) => {
           const card = createCard(item);
           cardsSection.addItem(card);
@@ -98,7 +93,7 @@ api
       },
       ".element-list"
     );
-    cardsSection.renderItems(data);
+    cardsSection.renderItems(cards);
   })
   .catch((err) => {
     console.log(err);
@@ -146,11 +141,13 @@ function handleEditFormSubmit(newData) {
         avatarLink: data.avatar,
         userId: data._id,
       });
+      popupFormEditProfile.close();
     })
     .catch((err) => {
       console.log(err);
-    });
-  popupFormEditProfile.close();
+    })
+    .finally(() => popupFormEditProfile.renderLoading(false));
+
 }
 
 function handleEditAvatarFormSubmit(newData) {
@@ -165,11 +162,13 @@ function handleEditAvatarFormSubmit(newData) {
         avatarLink: data.avatar,
         userId: data._id,
       });
+      popupFormEditAvatar.close();
     })
     .catch((err) => {
       console.log(err);
-    });
-    popupFormEditAvatar.close();
+    })
+    .finally(() => popupFormEditAvatar.renderLoading(false));
+
 }
 
 function handleConfirmationDeleteSubmit(cardToDelete) {
@@ -177,11 +176,12 @@ function handleConfirmationDeleteSubmit(cardToDelete) {
     .deleteCard(cardToDelete.getId())
     .then(() => {
       cardToDelete.delete();
+      popupFormConfirmationDelete.close();
     })
     .catch((err) => {
       console.log(err);
     });
-  popupFormConfirmationDelete.close();
+
 }
 
 function createCard(cardData) {
@@ -236,10 +236,10 @@ function handleNewPlaceFormSubmit(newData) {
     })
     .then((data) => {
       cardsSection.addItem(createCard(data));
+      popupFormAddNewPlace.close();
     })
     .catch((err) => {
       console.log(err);
-    });
-  popupFormAddNewPlace.close();
-  validationAddNewPlace.disableButton();
+    })
+    .finally(() => popupFormAddNewPlace.renderLoading(false));
 }
